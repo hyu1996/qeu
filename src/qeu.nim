@@ -23,7 +23,7 @@ template isUnsignedNumber(N: typedesc): bool =
   N is uint32 or
   N is uint64 or
   N is uint
-
+  
 template castToBiggestNumber[T: Number](number: T, kind: SymbolKind): auto =
   when kind == SymbolKind.UnsignedSymbol:
     uint64(number)
@@ -54,12 +54,12 @@ template compareTwoNumber[T: Number, E: Number](number1: T, number2: E, greater:
   when isUnsignedNumber(typeof(T)) and isUnsignedNumber(typeof(E)):
     compare(number1, number2, SymbolKind.UnsignedSymbol)
   elif isUnsignedNumber(typeof(T)):
-    if number2 < E(0):
+    if number2 < cast[E](0):
       result = greater
     else:
       compare(number1, number2, SymbolKind.UnsignedSymbol)
   elif isUnsignedNumber(typeof(E)):
-    if number1 < T(0):
+    if number1 < cast[T](0):
       result = less
     else:
       compare(number1, number2, SymbolKind.UnsignedSymbol)
