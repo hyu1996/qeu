@@ -1,0 +1,2 @@
+# qeu
+compare two number
