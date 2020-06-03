@@ -23,7 +23,7 @@ template isUnsignedNumber(N: typedesc): bool =
   N is uint32 or
   N is uint64 or
   N is uint
-  
+
 template castToBiggestNumber[T: Number](number: T, kind: SymbolKind): auto =
   when kind == SymbolKind.UnsignedSymbol:
     uint64(number)
@@ -42,11 +42,11 @@ template compareTwoNumber[T: Number, E: Number](number1: T, number2: E, ksymbol:
 
   when isFloatNumber(typeof(T)) or isFloatNumber(typeof(E)):
     compareTwoNumber(
-      float64(number1), 
+      float64(number1),
       float64(number2), kordering)
   else:
     compareTwoNumber(
-      castToBiggestNumber(number1, ksymbol), 
+      castToBiggestNumber(number1, ksymbol),
       castToBiggestNumber(number2, ksymbol), kordering)
 
 template compareTwoNumber[T: Number, E: Number](number1: T, number2: E, greater: typed, less: typed, compare: typed): untyped =
@@ -67,23 +67,23 @@ template compareTwoNumber[T: Number, E: Number](number1: T, number2: E, greater:
     compare(number1, number2, SymbolKind.SignedSymbol)
 
 proc less*[T: Number, E: Number](
-  number1: T, number2: E): bool {.inline, noSideEffect.} = 
+  number1: T, number2: E): bool {.inline, noSideEffect.} =
 
   template checkLess[T: Number, E: Number](number1: T, number2: E, kind: SymbolKind): untyped =
     result = compareTwoNumber(number1, number2, kind, Ordering.Less)
-    
+
   compareTwoNumber(number1, number2, false, true, checkLess)
 
 template greater*[T: Number, E: Number](
-  number1: T, number2: E): bool = 
+  number1: T, number2: E): bool =
     less(number2, number1)
 
 proc equal*[T: Number, E: Number](
-  number1: T, number2: E): bool {.inline, noSideEffect.} = 
+  number1: T, number2: E): bool {.inline, noSideEffect.} =
 
   template checkEqual[T: Number, E: Number](number1: T, number2: E, kind: SymbolKind): untyped =
     result = compareTwoNumber(number1, number2, kind, Ordering.Equal)
-    
+
   compareTwoNumber(number1, number2, false, false, checkEqual)
 
 template lessEqual*[T: Number, E: Number](
