@@ -1,5 +1,5 @@
 # qeu
-Functionality for compare two values.  
+Functionality for compare two values.<br>
 Supports comparison between signed and unsigned integers.
 
 # Examples
@@ -21,4 +21,10 @@ assert equal(3, 3)
 # three-way comparison
 assert equal(Ordering.Less, compare(0, 1))
 assert compare(cast[uint32](-1), -1) == Ordering.Greater
+```
+
+# Note
+The Javascript backend has not yet fully supported types such as `"uint64" "int64" "float64"`, so that comparing two larger values will produce erroneous results.
+```javascript
+console.log(9999999999999999) // actually shows 10000000000000000
 ```
